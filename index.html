@@ -1,33 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>C6X6 - Files</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C6XC Game Collection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>:root{--bg:#0a0a0b;--bg-elevated:#111113;--fg:#e8e8e8;--muted:#6b6b6b;--accent:#00ff88;--border:#222225;--card:#161618}*{box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh}.grid-bg{background-image:linear-gradient(rgba(0,255,136,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,.03) 1px,transparent 1px);background-size:60px 60px}.gradient-overlay{background:radial-gradient(ellipse at top,rgba(0,255,136,.08) 0%,transparent 60%)}.game-link{font-family:'JetBrains Mono',monospace;background:var(--card);border:1px solid var(--border);color:var(--fg);transition:all .2s ease;position:relative;overflow:hidden}.game-link::before{content:'';position:absolute;left:0;top:0;height:100%;width:3px;background:var(--accent);transform:scaleY(0);transition:transform .2s ease}.game-link:hover{background:var(--bg-elevated);border-color:var(--accent);color:var(--accent);transform:translateX(4px)}.game-link:hover::before{transform:scaleY(1)}.game-link:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.search-input{font-family:'JetBrains Mono',monospace;background:var(--card);border:1px solid var(--border);color:var(--fg);transition:all .2s ease}.search-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,255,136,.1)}.search-input::placeholder{color:var(--muted)}.spinner{width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.game-item{opacity:0;animation:fadeIn .3s ease forwards}@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.stat-number{font-variant-numeric:tabular-nums}.footer-link{color:var(--muted);transition:color .2s ease}.footer-link:hover{color:var(--accent)}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--muted)}</style>
 </head>
-<body>
-  <ul id="game-list"></ul>
+<body class="grid-bg">
+    <div class="gradient-overlay fixed inset-0 pointer-events-none"></div>
+    <div class="relative z-10 min-h-screen flex flex-col">
+        <header class="pt-16 pb-12 px-6 md:pt-24 md:pb-16">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--border)] bg-[var(--card)] mb-6">
+                    <span class="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse"></span>
+                    <span class="text-xs font-mono text-[var(--muted)] uppercase tracking-wider">Open Source</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4">
+                    <span class="text-[var(--accent)]">C6XC</span> Game Collection
+                </h1>
+                <p class="text-lg md:text-xl text-[var(--muted)] max-w-xl mx-auto">
+                    <span id="game-count" class="text-[var(--fg)] font-semibold">1000+</span> browsergames — play instantly or view code
+                </p>
+                <a href="https://github.com/HyperRushNet/c6xc" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-8 px-5 py-2.5 rounded-lg bg-[var(--card)] border border-[var(--border)] text-sm font-medium hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all duration-200">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    View on GitHub
+                </a>
+            </div>
+        </header>
 
-  <script>
-    const repoAPI = "https://api.github.com/repos/HyperRushNet/c6xc/contents/";
+        <section class="px-6 pb-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="relative">
+                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" id="search-input" class="search-input w-full pl-12 pr-4 py-3.5 rounded-xl text-sm" placeholder="Search games..." aria-label="Search games">
+                </div>
+                <div class="flex items-center justify-between mt-4 text-sm">
+                    <span class="text-[var(--muted)]"><span id="visible-count" class="stat-number text-[var(--fg)] font-semibold">0</span> games</span>
+                    <span id="loading-status" class="text-[var(--muted)]">Loading...</span>
+                </div>
+            </div>
+        </section>
 
-    fetch(repoAPI)
-      .then(response => response.json())
-      .then(data => {
-        const list = document.getElementById("game-list");
+        <main class="flex-1 px-6 pb-12">
+            <div class="max-w-4xl mx-auto">
+                <ul id="games-list" class="grid gap-2" role="list" aria-label="List of games"></ul>
+                <div id="loading-state" class="flex flex-col items-center justify-center py-20">
+                    <div class="spinner mb-4"></div>
+                    <p class="text-[var(--muted)] text-sm">Loading games via GitHub API...</p>
+                </div>
+                <div id="error-state" class="hidden text-center py-20">
+                    <p class="text-[var(--muted)] mb-4">Failed to load games.</p>
+                    <button onclick="loadGames()" class="px-4 py-2 rounded-lg bg-[var(--card)] border border-[var(--border)] text-sm hover:border-[var(--accent)] transition-colors">Retry</button>
+                </div>
+                <div id="empty-state" class="hidden text-center py-20">
+                    <p class="text-[var(--muted)]">No games found.</p>
+                </div>
+            </div>
+        </main>
 
-        data.forEach(file => {
-          if(file.name.endsWith(".html") && file.name !== "index.html") {
-            const li = document.createElement("li");
-            const a = document.createElement("a");
-            a.href = file.name;
-            a.textContent = file.name;
-            a.target = "_blank";
-            li.appendChild(a);
-            list.appendChild(li);
-          }
-        });
-      })
-      .catch(err => console.error("Error:", err));
-  </script>
+        <footer class="border-t border-[var(--border)] bg-[var(--bg-elevated)]">
+            <div class="max-w-4xl mx-auto px-6 py-8">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="text-center md:text-left">
+                        <p class="text-sm text-[var(--muted)]">Project <span class="text-[var(--fg)]">C6XC</span> — Open source browsergames project</p>
+                    </div>
+                    <div class="flex items-center gap-6 text-sm">
+                        <a href="https://github.com/HyperRushNet/c6xc" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub Repo</a>
+                        <span class="text-[var(--border)]">|</span>
+                        <a href="https://hyperrushnet.github.io/c6xc/" target="_blank" rel="noopener noreferrer" class="footer-link">Live Site</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>let allGames=[];const gamesList=document.getElementById("games-list"),searchInput=document.getElementById("search-input"),loadingState=document.getElementById("loading-state"),errorState=document.getElementById("error-state"),emptyState=document.getElementById("empty-state"),loadingStatus=document.getElementById("loading-status"),visibleCount=document.getElementById("visible-count"),gameCount=document.getElementById("game-count");async function loadGames(){loadingState.classList.remove("hidden"),errorState.classList.add("hidden"),emptyState.classList.add("hidden"),gamesList.innerHTML="",loadingStatus.textContent="Loading...";try{const e=await fetch("https://api.github.com/repos/HyperRushNet/c6xc/contents/");if(!e.ok)throw new Error("HTTP error");const t=await e.json();allGames=t.filter(e=>"file"===e.type&&e.name.endsWith(".html")&&"index.html"!==e.name).map(e=>({name:e.name.replace(".html",""),url:`https://hyperrushnet.github.io/c6xc/${e.name}`})).sort((e,t)=>e.name.localeCompare(t.name)),loadingState.classList.add("hidden"),loadingStatus.textContent="Fully loaded",gameCount.textContent=allGames.length.toLocaleString(),visibleCount.textContent=allGames.length.toLocaleString(),renderGames(allGames)}catch(e){console.error(e),loadingState.classList.add("hidden"),errorState.classList.remove("hidden"),loadingStatus.textContent="Error"}}function renderGames(e){gamesList.innerHTML="",e.length?emptyState.classList.add("hidden"):emptyState.classList.remove("hidden"),visibleCount.textContent=e.length.toLocaleString();const t=document.createDocumentFragment();e.forEach((e,n)=>{const a=document.createElement("li");a.className="game-item",a.style.animationDelay=`${Math.min(.02*n,.5)}s`;const r=document.createElement("a");r.href=e.url,r.target="_blank",r.rel="noopener noreferrer",r.className="game-link block px-4 py-3 rounded-lg text-sm",r.innerHTML=`<span class="flex items-center gap-3"><svg class="w-4 h-4 text-[var(--muted)] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span class="truncate">${escapeHtml(e.name)}</span></span>`,a.appendChild(r),t.appendChild(a)}),gamesList.appendChild(t)}function escapeHtml(e){const t=document.createElement("div");return t.textContent=e,t.innerHTML}function filterGames(e){const t=e.toLowerCase().trim();renderGames(t?allGames.filter(e=>e.name.toLowerCase().includes(t)):allGames)}let debounceTimer;searchInput.addEventListener("input",e=>{clearTimeout(debounceTimer),debounceTimer=setTimeout(()=>{filterGames(e.target.value)},150)}),document.addEventListener("keydown",e=>{"/"===e.key&&document.activeElement!==searchInput&&(e.preventDefault(),searchInput.focus()),"Escape"===e.key&&document.activeElement===searchInput&&(searchInput.value="",filterGames(""),searchInput.blur())}),document.addEventListener("DOMContentLoaded",loadGames);</script>
 </body>
 </html>
