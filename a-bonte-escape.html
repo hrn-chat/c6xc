@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>html,body,#container{margin:0;padding:0;overflow:hidden;width:100%;height:100%;display:flex;justify-content:center;align-items:center}canvas{display:block}#container{width:100vw;height:100vh}</style>
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+  <script>window.RufflePlayer=window.RufflePlayer||{};window.RufflePlayer.config={"autoplay":"on","polyfills":true,"letterbox":"on","backgroundColor":null,"scale":"showAll","allowFullscreen":true,"forceScale":true,"forceAlign":true,"splashScreen":true,"wmode":"Window","unmuteOverlay":"hidden","quality":"high"};window.addEventListener("load",(event)=>{const ruffle=window.RufflePlayer.newest();const player=ruffle.createPlayer();const container=document.getElementById("container");container.appendChild(player);player.load("https://cdn.jsdelivr.net/gh/koloaloba/sample@e8203a1c2ea7a99439a21db0b989b84196438d3e/tutorial/bonte.js");player.style.width="100%";player.style.height="100%"});</script>
+</head>
+<body>
+  <div id="container"></div>
+</body>
+</html>
