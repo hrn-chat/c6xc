@@ -1,0 +1,14 @@
+<html>
+<head>
+  <style>html,body,#container{margin:0;padding:0;width:100%!important;height:100%!important;overflow:hidden!important}.webgl-content,#gameContainer{width:100vw;height:100vh}canvas{width:100vw!important;height:100vh!important;display:block}</style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/paigerodeghero/academicwebsite@897c910c65e6c68b04c44a6b6eba0b99d0f2f2cf/TemplateData/style.css">
+  <script src="https://cdn.jsdelivr.net/gh/paigerodeghero/academicwebsite@897c910c65e6c68b04c44a6b6eba0b99d0f2f2cf/TemplateData/UnityProgress.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/udbsite/adofai@f170efcb1b532312817e69f26ce3f84c99940238/Build/UnityLoader.js"></script>
+  <script>function forceResize(){var e=document.querySelector("#gameContainer canvas");e&&(e.style.width="100vw",e.style.height="100vh",e.width=window.innerWidth,e.height=window.innerHeight)}window.addEventListener("resize",forceResize),setInterval(forceResize,100);var gameInstance=UnityLoader.instantiate("gameContainer","https://cdn.jsdelivr.net/gh/udbsite/adofai@f170efcb1b532312817e69f26ce3f84c99940238/Build/adofaiii4.json",{onProgress:UnityProgress,Module:{onRuntimeInitialized:function(){UnityProgress(gameInstance,"complete"),forceResize()}}});</script>
+</head>
+<body>
+  <div class="webgl-content">
+    <div id="gameContainer"></div>
+  </div>
+</body>
+</html>
