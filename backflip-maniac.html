@@ -1,0 +1,13 @@
+<html>
+<head>
+  <style>body,html{margin:0;padding:0;overflow:hidden;width:100%!important;height:100%!important}#gameContainer,canvas{width:100vw!important;height:100vh!important;display:block}</style>
+  <script src="https://cdn.jsdelivr.net/gh/greggman/webgl-helpers@06e3d45373af0f3ce8f58b472b61835d9678d23a/examples/unity/TemplateData/UnityProgress.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/Greenbolt8003/Tiles@0f50035be099c0344e9fd52108b16d27a7ba7fca/short-life-2/UnityLoader.js"></script>
+  <script>var gameInstance=UnityLoader.instantiate("gameContainer","https://cdn.jsdelivr.net/gh/EBIcx/higuy2@02b4f58a66470e5e34e983bbcc4322ffb1f00e08/games/BackflipManiac/backflip_maniac.json",{onProgress:UnityProgress,Module:{onRuntimeInitialized:function(){UnityProgress(gameInstance,"complete")}}});((s)=>{const t=document.createElement("style");t.textContent=`${s.join(",")}{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;position:fixed!important;top:-9999px!important}`,document.documentElement.appendChild(t);const e=()=>s.forEach(s=>{document.querySelectorAll(s).forEach(s=>s.remove())});new MutationObserver(e).observe(document.documentElement,{childList:!0,subtree:!0}),e();const o=(s)=>{try{Object.defineProperty(window,s,{value:{cmd:[],display:()=>{},enableServices:()=>{},defineSlot:()=>({addService:()=>({setTargeting:()=>({})})})},writable:!1,configurable:!1})}catch(s){}};["googletag","google"].forEach(o)})(["#promo","#imaContainer","#imaContainer_new","#imaVideo","#imaVideo2","#preroll_banner_container",".promo-container",".banner"]);</script>
+</head>
+<body>
+  <div class="webgl-content">
+    <div id="gameContainer"></div>
+  </div>
+</body>
+</html>
