@@ -20,10 +20,148 @@
             }
         }
     </script>
-    <style>:root{--bg:#0a0a0b;--bg-elevated:#111113;--fg:#e8e8e8;--muted:#6b6b6b;--accent:#00ff88;--border:#222225;--card:#161618}*{box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh}.grid-bg{background-image:linear-gradient(rgba(0,255,136,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,.03) 1px,transparent 1px);background-size:60px 60px}.gradient-overlay{background:radial-gradient(ellipse at top,rgba(0,255,136,.08) 0%,transparent 60%)}.game-link{font-family:'JetBrains Mono',monospace;background:var(--card);border:1px solid var(--border);color:var(--fg);transition:all .2s ease;position:relative;overflow:hidden}.game-link::before{content:'';position:absolute;left:0;top:0;height:100%;width:3px;background:var(--accent);transform:scaleY(0);transition:transform .2s ease}.game-link:hover{background:var(--bg-elevated);border-color:var(--accent);color:var(--accent);transform:translateX(4px)}.game-link:hover::before{transform:scaleY(1)}.game-link:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.search-input{font-family:'JetBrains Mono',monospace;background:var(--card);border:1px solid var(--border);color:var(--fg);transition:all .2s ease}.search-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,255,136,.1)}.search-input::placeholder{color:var(--muted)}.spinner{width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.game-item{opacity:0;animation:fadeIn .3s ease forwards}@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.stat-number{font-variant-numeric:tabular-nums}.footer-link{color:var(--muted);transition:color .2s ease}.footer-link:hover{color:var(--accent)}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--muted)}</style>
+    <style>
+        :root {
+            --bg: #0a0a0b;
+            --bg-elevated: #111113;
+            --fg: #e8e8e8;
+            --muted: #6b6b6b;
+            --accent: #00ff88;
+            --accent-dim: rgba(0, 255, 136, 0.1);
+            --border: #222225;
+            --card: #161618;
+            --danger: #ff4d4d;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--fg); min-height: 100vh; }
+        
+        /* Background & Layout */
+        .grid-bg { background-image: linear-gradient(rgba(0,255,136,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,.03) 1px,transparent 1px); background-size: 60px 60px; }
+        .gradient-overlay { background: radial-gradient(ellipse at top,rgba(0,255,136,.08) 0%,transparent 60%); }
+        
+        /* Components */
+        .game-link {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--fg);
+            transition: all .2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .game-link::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; height: 100%; width: 3px;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: transform .2s ease;
+        }
+        .game-link:hover { background: var(--bg-elevated); border-color: var(--accent); color: var(--accent); transform: translateX(4px); }
+        .game-link:hover::before { transform: scaleY(1); }
+        .game-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+        .search-input {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--fg);
+            transition: all .2s ease;
+        }
+        .search-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
+        .search-input::placeholder { color: var(--muted); }
+
+        /* Spinner */
+        .spinner { width: 24px; height: 24px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Animations */
+        .game-item { opacity: 0; animation: fadeIn .3s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Utilities */
+        .stat-number { font-variant-numeric: tabular-nums; }
+        .footer-link { color: var(--muted); transition: color .2s ease; }
+        .footer-link:hover { color: var(--accent); }
+
+        /* Custom Modal Styles */
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-backdrop.active { opacity: 1; visibility: visible; }
+        .modal-content {
+            transform: scale(0.95) translateY(10px);
+            transition: transform 0.3s ease;
+        }
+        .modal-backdrop.active .modal-content { transform: scale(1) translateY(0); }
+
+        /* Rate Limit Bar */
+        .rate-bar-bg {
+            background: var(--border);
+            border-radius: 999px;
+            height: 6px;
+            overflow: hidden;
+        }
+        .rate-bar-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 999px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+        }
+        .rate-bar-fill.low { background: #fbbf24; } /* Amber */
+        .rate-bar-fill.critical { background: var(--danger); }
+
+        /* Focus states */
+        button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+        /* Reduced Motion */
+        @media(prefers-reduced-motion:reduce) {
+            *,*::before,*::after { animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; }
+        }
+    </style>
 </head>
 <body class="grid-bg">
     <div class="gradient-overlay fixed inset-0 pointer-events-none"></div>
+    
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="modal-content w-full max-w-md bg-[var(--bg-elevated)] border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden">
+            <div class="p-6 border-b border-[var(--border)] flex justify-between items-center">
+                <h2 class="text-lg font-semibold">API Settings</h2>
+                <button id="close-modal-btn" class="text-[var(--muted)] hover:text-[var(--fg)] transition-colors p-1" aria-label="Close settings">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <label class="block text-sm text-[var(--muted)] mb-2">GitHub Personal Access Token (PAT)</label>
+                <input type="password" id="pat-input" class="search-input w-full px-4 py-3 rounded-lg text-sm mb-3" placeholder="ghp_...">
+                <p class="text-xs text-[var(--muted)] mb-4">
+                    Increases API limit from <span class="text-[var(--fg)]">60</span> to <span class="text-[var(--accent)]">5000</span> requests/hour. 
+                    Token is stored locally in your browser.
+                </p>
+                <div class="flex items-center gap-3">
+                    <button id="save-pat-btn" class="flex-1 px-4 py-2.5 rounded-lg bg-[var(--accent)] text-black text-sm font-semibold hover:opacity-90 transition-opacity">
+                        Save Token
+                    </button>
+                    <button id="clear-pat-btn" class="px-4 py-2.5 rounded-lg bg-[var(--card)] border border-[var(--border)] text-sm text-[var(--muted)] hover:text-[var(--danger)] hover:border-[var(--danger)] transition-colors">
+                        Clear
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="relative z-10 min-h-screen flex flex-col">
         <header class="pt-16 pb-12 px-6 md:pt-24 md:pb-16">
             <div class="max-w-4xl mx-auto text-center">
@@ -37,10 +175,20 @@
                 <p class="text-lg md:text-xl text-[var(--muted)] max-w-xl mx-auto">
                     <span id="game-count" class="text-[var(--fg)] font-semibold">...</span> browsergames — play instantly or view code
                 </p>
-                <a href="https://github.com/HyperRushNet/c6xc" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 mt-8 px-5 py-2.5 rounded-lg bg-[var(--card)] border border-[var(--border)] text-sm font-medium hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all duration-200">
-                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    View on GitHub
-                </a>
+                
+                <!-- Action Buttons -->
+                <div class="flex items-center justify-center gap-3 mt-8">
+                    <a href="https://github.com/HyperRushNet/c6xc" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[var(--card)] border border-[var(--border)] text-sm font-medium hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all duration-200">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        View on GitHub
+                    </a>
+                    
+                    <!-- Settings Button -->
+                    <button id="open-settings-btn" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[var(--card)] border border-[var(--border)] text-sm font-medium hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all duration-200">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        API Settings
+                    </button>
+                </div>
             </div>
         </header>
 
@@ -50,9 +198,25 @@
                     <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                     <input type="text" id="search-input" class="search-input w-full pl-12 pr-4 py-3.5 rounded-xl text-sm" placeholder="Search games..." aria-label="Search games">
                 </div>
-                <div class="flex items-center justify-between mt-4 text-sm">
-                    <span class="text-[var(--muted)]"><span id="visible-count" class="stat-number text-[var(--fg)] font-semibold">0</span> games</span>
-                    <span id="loading-status" class="text-[var(--muted)]">Loading...</span>
+                
+                <!-- Stats Bar -->
+                <div class="mt-4 p-4 rounded-xl bg-[var(--card)] border border-[var(--border)]">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-center gap-4 text-sm">
+                            <span class="text-[var(--muted)]">
+                                <span id="visible-count" class="stat-number text-[var(--fg)] font-semibold">0</span> games
+                            </span>
+                            <span id="loading-status" class="text-[var(--muted)]">Initializing...</span>
+                        </div>
+                        
+                        <!-- Rate Limit Display -->
+                        <div class="flex items-center gap-3 flex-1 max-w-xs">
+                            <div class="rate-bar-bg flex-1">
+                                <div id="rate-bar-fill" class="rate-bar-fill" style="width: 0%"></div>
+                            </div>
+                            <span id="rate-limit-text" class="text-xs font-mono text-[var(--muted)] whitespace-nowrap">--/--</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -60,6 +224,8 @@
         <main class="flex-1 px-6 pb-12">
             <div class="max-w-4xl mx-auto">
                 <ul id="games-list" class="grid gap-2" role="list" aria-label="List of games"></ul>
+                
+                <!-- States -->
                 <div id="loading-state" class="flex flex-col items-center justify-center py-20">
                     <div class="spinner mb-4"></div>
                     <p class="text-[var(--muted)] text-sm">Loading games via GitHub API...</p>
@@ -91,7 +257,7 @@
     </div>
 
     <script>
-        let allGames = [];
+        // --- DOM Elements ---
         const gamesList = document.getElementById("games-list");
         const searchInput = document.getElementById("search-input");
         const loadingState = document.getElementById("loading-state");
@@ -100,18 +266,118 @@
         const loadingStatus = document.getElementById("loading-status");
         const visibleCount = document.getElementById("visible-count");
         const gameCount = document.getElementById("game-count");
+        
+        // Rate Limit Elements
+        const rateBarFill = document.getElementById("rate-bar-fill");
+        const rateLimitText = document.getElementById("rate-limit-text");
+        
+        // Modal Elements
+        const modal = document.getElementById("settings-modal");
+        const openSettingsBtn = document.getElementById("open-settings-btn");
+        const closeModalBtn = document.getElementById("close-modal-btn");
+        const patInput = document.getElementById("pat-input");
+        const savePatBtn = document.getElementById("save-pat-btn");
+        const clearPatBtn = document.getElementById("clear-pat-btn");
 
+        // --- State ---
+        let allGames = [];
+        const STORAGE_KEY = "github_pat_c6xc";
+
+        // --- Modal Logic ---
+        function openModal() {
+            modal.classList.add("active");
+            const currentToken = localStorage.getItem(STORAGE_KEY) || "";
+            patInput.value = currentToken;
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeModal() {
+            modal.classList.remove("active");
+            document.body.style.overflow = "";
+        }
+
+        openSettingsBtn.addEventListener("click", openModal);
+        closeModalBtn.addEventListener("click", closeModal);
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        savePatBtn.addEventListener("click", () => {
+            const token = patInput.value.trim();
+            if (token) {
+                localStorage.setItem(STORAGE_KEY, token);
+            } else {
+                localStorage.removeItem(STORAGE_KEY);
+            }
+            closeModal();
+            loadGames(); // Reload with new token
+        });
+
+        clearPatBtn.addEventListener("click", () => {
+            localStorage.removeItem(STORAGE_KEY);
+            patInput.value = "";
+            closeModal();
+            loadGames(); // Reload without token
+        });
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && modal.classList.contains("active")) {
+                closeModal();
+            }
+        });
+
+        // --- Rate Limit UI ---
+        function updateRateLimitUI(limit, remaining) {
+            const used = limit - remaining;
+            const percent = (used / limit) * 100;
+            
+            rateBarFill.style.width = `${percent}%`;
+            rateLimitText.textContent = `${remaining}/${limit}`;
+
+            // Color coding
+            rateBarFill.classList.remove("low", "critical");
+            if (remaining < limit * 0.1) {
+                rateBarFill.classList.add("critical");
+            } else if (remaining < limit * 0.3) {
+                rateBarFill.classList.add("low");
+            }
+        }
+
+        // --- Core Logic ---
         async function loadGames() {
             loadingState.classList.remove("hidden");
             errorState.classList.add("hidden");
             emptyState.classList.add("hidden");
             gamesList.innerHTML = "";
             loadingStatus.textContent = "Loading...";
+            updateRateLimitUI(5000, 5000); // Reset visual
+
+            const token = localStorage.getItem(STORAGE_KEY);
+            const headers = {
+                "Accept": "application/vnd.github.v3+json"
+            };
+
+            if (token) {
+                headers["Authorization"] = `token ${token}`;
+            }
 
             try {
-                const response = await fetch("https://api.github.com/repos/HyperRushNet/c6xc/contents/");
-                if (!response.ok) throw new Error("HTTP error");
+                const response = await fetch("https://api.github.com/repos/HyperRushNet/c6xc/contents/", {
+                    headers: headers,
+                    cache:'no-store'
+                });
                 
+                if (!response.ok) {
+                    if (response.status === 403) throw new Error("Rate limit exceeded");
+                    if (response.status === 401) throw new Error("Invalid Token");
+                    throw new Error("HTTP error");
+                }
+
+                // Handle Rate Limit Headers
+                const limit = parseInt(response.headers.get("X-RateLimit-Limit")) || (token ? 5000 : 60);
+                const remaining = parseInt(response.headers.get("X-RateLimit-Remaining")) ?? limit;
+                updateRateLimitUI(limit, remaining);
+
                 const data = await response.json();
                 
                 allGames = data
@@ -127,11 +393,15 @@
                 gameCount.textContent = allGames.length.toLocaleString();
                 visibleCount.textContent = allGames.length.toLocaleString();
                 renderGames(allGames);
+
             } catch (error) {
                 console.error(error);
                 loadingState.classList.add("hidden");
                 errorState.classList.remove("hidden");
-                loadingStatus.textContent = "Error";
+                loadingStatus.textContent = `Error: ${error.message}`;
+                rateLimitText.textContent = "Error";
+                rateBarFill.style.width = "100%";
+                rateBarFill.classList.add("critical");
             }
         }
 
@@ -192,8 +462,9 @@
             }, 150);
         });
 
+        // Keyboard shortcuts
         document.addEventListener("keydown", (e) => {
-            if (e.key === "/" && document.activeElement !== searchInput) {
+            if (e.key === "/" && document.activeElement !== searchInput && !modal.classList.contains("active")) {
                 e.preventDefault();
                 searchInput.focus();
             }
