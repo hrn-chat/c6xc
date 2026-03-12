@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>html,body{margin:0;padding:0;height:100%;background:#000;width:100vw;height:100vh}#openfl-content{background:#000;width:100%;height:100%}#spinner{transform-origin:50% 50%;width:82px;height:81px;animation:spin1 2s infinite linear}@keyframes spin1{from{transform:rotate(0)}to{transform:rotate(360deg)}}html,body,#container{margin:0;padding:0;width:100%!important;height:100%!important;overflow:hidden!important}</style>
+    <script src="https://cdn.jsdelivr.net/gh/brodeliver/bbb@4/BaseballBros.js?th=101"></script>
+    <script src="https://cdn.jsdelivr.net/gh/brodeliver/bbb@main/physics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script>window.scrollerMessage=" WELCOME TO BASEBALL BROS! GOOD LUCK IF YOUR FAVORITE TEAM IS IN...HAVE A GLITCH OR FEEDBACK, YOU CAN EMAIL INFO@BLUEWIZARD.COM!!! ",window.hxOverrides=window.hxOverrides||{},typeof hxOverrides.cca!="function"&&(hxOverrides.cca=function(e,n){return e==null?0:(e=String(e),e.charCodeAt(n|0)||0)});const firebaseConfig={apiKey:"AIzaSyBuzj8XEP7-5kOFFhyuxylQ6P0B2G_ogsM",authDomain:"baseball-bros-8dd7f.firebaseapp.com",projectId:"baseball-bros-8dd7f",storageBucket:"baseball-bros-8dd7f.appspot.com",messagingSenderId:"618024516218",appId:"1:618024516218:web:11efff2d4b092aefaf99c3"};firebase.initializeApp(firebaseConfig);const auth=firebase.auth(),db=firebase.firestore();var userData="";function triggerSignIn(){const e=new firebase.auth.GoogleAuthProvider;auth.signInWithPopup(e)}function saveGameData(e){try{const n=auth.currentUser.uid;userData=e,db.collection("users").doc(n).set({gameData:e})}catch(t){}}function loadGameData(){return userData}function loadGameDataAsync(){try{const e=auth.currentUser.uid;db.collection("users").doc(e).get().then((e=>{e.exists&&(userData=e.data().gameData,Main?.LoadDataComplete?.())}))}catch(n){}}function signOut(){auth.signOut().then((()=>{Main?.SignOutComplete?.()}))}function isUserLoggedIn(){return auth.currentUser}function GamePlayStart(){}function GamePlayStop(){}function HappyTime(){}function gtag(){}function updateStatus(){}function recordSession(){}function SendEvent(){}function ShowAdBreak(){Main?.DoneInterstitialAd?.(!0)}function startVideoAd(){Main?.DoneVideoAd?.(!0)}function ShowVideo(e=null){Main.DoneVideoAd(!0)}for(let e=0;e<=10;e++)window["ShowAd"+e]=window["ShowAd"+e]||function(){};addEventListener("touchmove",(e=>e.preventDefault()),{capture:!1,passive:!1}),typeof devicePixelRatio!="undefined"&&devicePixelRatio>2&&document.getElementById("viewport").setAttribute("content","width=device-width, initial-scale="+(2/devicePixelRatio)+", user-scalable=no"),addEventListener("keydown",(e=>{[32,38,40,9].includes(e.keyCode)&&e.target===document.body&&e.preventDefault()})),((s)=>{const t=document.createElement("style");t.textContent=`${s.join(",")}{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;position:fixed!important;top:-9999px!important}`,document.documentElement.appendChild(t);const e=()=>s.forEach(s=>{document.querySelectorAll(s).forEach(s=>s.remove())});new MutationObserver(e).observe(document.documentElement,{childList:!0,subtree:!0}),e();const o=(s)=>{try{Object.defineProperty(window,s,{value:{cmd:[],display:()=>{},enableServices:()=>{},defineSlot:()=>({addService:()=>({setTargeting:()=>({})})})},writable:!1,configurable:!1})}catch(s){}};["googletag","google"].forEach(o)})(["#promo","#imaContainer","#imaContainer_new","#imaVideo","#imaVideo2","#preroll_banner_container",".promo-container",".banner"]);</script>
+  </head>
+  <body style="overflow:hidden;">
+    <div id="loading" style="position: absolute; z-index: 15; top: 60%; left: 50%; transform: translate(-50%, 0); background: black;">
+      <center>
+        <img src="https://cdn.jsdelivr.net/gh/brodeliver/bbb@4/assets/loading4.png"><br>
+        <img src="https://cdn.jsdelivr.net/gh/brodeliver/bbb@4/assets/fbro.png">
+        <img src="https://cdn.jsdelivr.net/gh/brodeliver/bbb@4/assets/bbbro.png">
+        <img src="https://cdn.jsdelivr.net/gh/brodeliver/bbb@4/assets/sbro.png">
+        <img src="https://cdn.jsdelivr.net/gh/brodeliver/bbb@4/assets/wbro.png">
+        <img src="https://cdn.jsdelivr.net/gh/brodeliver/bbb@4/assets/kbro.png">
+        <img src="https://cdn.jsdelivr.net/gh/brodeliver/bbb@4/assets/bbro.png">
+      </center>
+    </div>
+    <div id="game2" style="width:100%;height:100%;">
+      <div id="openfl-content" style="width:100%;height:100%;" onblur="window.focus();window.scrollTo(0,0);">
+        <script>
+          lime.embed("BaseballBros","openfl-content",0,0,{parameters:{}});
+        </script>
+      </div>
+    </div>
+  </body>
+</html>
