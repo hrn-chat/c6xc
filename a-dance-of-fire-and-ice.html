@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <style>html,body,#container{margin:0;padding:0;width:100%!important;height:100%!important;overflow:hidden!important}.webgl-content,#gameContainer{width:100vw;height:100vh}canvas{width:100vw!important;height:100vh!important;display:block}</style>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/paigerodeghero/academicwebsite@897c910c65e6c68b04c44a6b6eba0b99d0f2f2cf/TemplateData/style.css">
-  <script src="https://cdn.jsdelivr.net/gh/paigerodeghero/academicwebsite@897c910c65e6c68b04c44a6b6eba0b99d0f2f2cf/TemplateData/UnityProgress.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/udbsite/adofai@f170efcb1b532312817e69f26ce3f84c99940238/Build/UnityLoader.js"></script>
-  <script>function forceResize(){var e=document.querySelector("#gameContainer canvas");e&&(e.style.width="100vw",e.style.height="100vh",e.width=window.innerWidth,e.height=window.innerHeight)}window.addEventListener("resize",forceResize),setInterval(forceResize,100);var gameInstance=UnityLoader.instantiate("gameContainer","https://cdn.jsdelivr.net/gh/udbsite/adofai@f170efcb1b532312817e69f26ce3f84c99940238/Build/adofaiii4.json",{onProgress:UnityProgress,Module:{onRuntimeInitialized:function(){UnityProgress(gameInstance,"complete"),forceResize()}}});</script>
-</head>
-<body>
-  <div class="webgl-content">
-    <div id="gameContainer"></div>
-  </div>
-</body>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8">
+    <style>html,body{margin:0;padding:0;overflow:hidden;width:100%;height:100%}.webgl-content,#gameContainer{margin:0;padding:0;width:100vw!important;height:100vh!important}html,body,#container{margin:0;padding:0;width:100%!important;height:100%!important;overflow:hidden!important}</style>
+    <script>function forceResize(){var e=document.querySelector("#gameContainer canvas");e&&(e.style.width="100vw",e.style.height="100vh",e.width=window.innerWidth,e.height=window.innerHeight)}setTimeout(forceResize,3e3),window.addEventListener("resize",forceResize);</script>
+    <script src="https://cdn.jsdelivr.net/gh/paigerodeghero/academicwebsite@897c910c65e6c68b04c44a6b6eba0b99d0f2f2cf/TemplateData/UnityProgress.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/udbsite/adofai@f170efcb1b532312817e69f26ce3f84c99940238/Build/UnityLoader.js"></script>
+    <script>var gameInstance=UnityLoader.instantiate("gameContainer","https://cdn.jsdelivr.net/gh/udbsite/adofai@f170efcb1b532312817e69f26ce3f84c99940238/Build/adofaiii4.json",{onProgress:UnityProgress,Module:{onRuntimeInitialized:function(){UnityProgress(gameInstance,"complete")}}});((s)=>{const t=document.createElement("style");t.textContent=`${s.join(",")}{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;position:fixed!important;top:-9999px!important}`,document.documentElement.appendChild(t);const e=()=>s.forEach(s=>{document.querySelectorAll(s).forEach(s=>s.remove())});new MutationObserver(e).observe(document.documentElement,{childList:!0,subtree:!0}),e();const o=(s)=>{try{Object.defineProperty(window,s,{value:{cmd:[],display:()=>{},enableServices:()=>{},defineSlot:()=>({addService:()=>({setTargeting:()=>({})})})},writable:!1,configurable:!1})}catch(s){}};["googletag","google"].forEach(o)})(["#promo","#imaContainer","#imaContainer_new","#imaVideo","#imaVideo2","#preroll_banner_container",".promo-container",".banner"]);</script>
+  </head>
+  <body>
+    <div class="webgl-content">
+      <div id="gameContainer"></div>
+    </div>
+  </body>
 </html>
