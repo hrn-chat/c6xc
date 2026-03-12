@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <style>
+    html,body{height:100%;margin:0;overflow:hidden;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:rgba(0,0,0,0)}#unity-container{width:100%;height:100%;position:relative}#unity-canvas{width:100%;height:100%;background:#231F20;display:block}#loading-cover{position:absolute;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;background:#231F20;z-index:9}#unity-loading-bar{display:flex;flex-direction:column;align-items:center}#unity-progress-bar-empty{width:200px;height:24px;border:1px solid #fff;padding:2px;display:none}#unity-progress-bar-full{width:0;height:100%;background:#fff}.spinner{width:5em;height:5em;margin:10px;border-radius:50%;border:1.1em solid rgba(255,255,255,0.2);border-left-color:#fff;animation:spin 1.1s infinite linear}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+  </style>
+</head>
+<body class="dark">
+  <div id="unity-container">
+    <canvas id="unity-canvas"></canvas>
+  </div>
+  <div id="loading-cover">
+    <div id="unity-loading-bar">
+      <div id="unity-progress-bar-empty">
+        <div id="unity-progress-bar-full"></div>
+      </div>
+      <div class="spinner"></div>
+    </div>
+  </div>
+
+  <script>
+    var StartUnityInstance,myGameInstance,ysdk={features:{LoadingAPI:{ready:function(){}}},environment:{i18n:{lang:"en",tld:"com"}},adv:{hideBannerAdv:function(){}},auth:{openAuthDialog:function(){return Promise.resolve()}},getPlayer:function(){return Promise.reject()}},environmentData={language:"en",browser:function(){}},cloudSaves="noData",paymentsData="none",playerData="noData",player=null,payments=null,initGame=!1,nowFullAdOpen=!1;function ym(){}function gtag(){}function StaticRBTDeactivate(){}function InitSDK(){}function FocusGame(){window.focus(),document.querySelector("#unity-canvas").focus()}function GetPayments(){return console.warn("GetPayments not implemented"),Promise.resolve("none")}function FullAdShow(){try{nowFullAdOpen||(nowFullAdOpen=!0,initGame&&myGameInstance.SendMessage("YandexGame","OpenFullAd"),setTimeout(()=>{nowFullAdOpen=!1,initGame&&myGameInstance.SendMessage("YandexGame","CloseFullAd","true"),FocusGame()},500))}catch(e){}}function RewardedShow(e){if("7"==e||7==e)return;try{myGameInstance.SendMessage("YandexGame","RewardVideo",e),myGameInstance.SendMessage("YandexGame","CloseVideo"),FocusGame()}catch(t){}}function SaveCloud(e,t){if(player)try{player.setData({saves:[e]},t)}catch(n){console.error(n)}else console.error("Player not loaded")}function InitLeaderboard(){try{ysdk.getLeaderboards().then(e=>{leaderboard=e,myGameInstance.SendMessage("YandexGame","InitializedLB")})}catch(e){}}function InitGame(e,t,n){console.log("Init GAME"),initGame=!0,photoSizeForInit=e,scopesForInit=t,nowFullAdOpen&&myGameInstance.SendMessage("YandexGame","OpenFullAd")}function GameReadyAPI(){}const buildUrl="https://cdn.jsdelivr.net/gh/goldie-code/eclipse@8716aef63e2b445caf3e1400fd343b6a9dae278a/lib",config={dataUrl:buildUrl+"/bped.js",frameworkUrl:buildUrl+"/bpe.js",codeUrl:buildUrl+"/bpew.js",streamingAssetsUrl:"https://cdn.jsdelivr.net/gh/goldie-code/eclipse@bc4b75e0f4f326aab608afe072ca9a4560d5726a/lib/StreamingAssets"},canvas=document.querySelector("#unity-canvas"),loadingCover=document.querySelector("#loading-cover"),progressBarEmpty=document.querySelector("#unity-progress-bar-empty"),progressBarFull=document.querySelector("#unity-progress-bar-full"),spinner=document.querySelector(".spinner");window.addEventListener("pointerdown",FocusGame),window.addEventListener("touchstart",FocusGame),document.addEventListener("contextmenu",e=>e.preventDefault());const script=document.createElement("script");script.src=buildUrl+"/loader.js",script.onload=()=>{StartUnityInstance=function(){createUnityInstance(canvas,config,e=>{spinner.style.display="none",progressBarEmpty.style.display="block",progressBarFull.style.width=100*e+"%"}).then(e=>{myGameInstance=e,loadingCover.style.display="none"}).catch(e=>console.error(e))},StartUnityInstance()},document.body.appendChild(script);
+  </script>
+</body>
+</html>
