@@ -3,15 +3,48 @@
   <head>
     <meta charset="utf-8">
     <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <style>html,body{margin:0;padding:0;height:100%;width:100%;background:#000;color:#ffa500}#openfl-content{background:#000;width:100%;height:100%}#loading{position:absolute;z-index:15;top:60%;left:50%;transform:translate(-50%,0);background:#000}#loading img{display:inline-block}footer{background:#000;padding:16px 0;text-align:center;color:#ccc;font-size:14px;border-top:1px solid #222}html,body,#container{margin:0;padding:0;width:100%!important;height:100%!important;overflow:hidden!important}</style>
+    <style>
+      html,body{margin:0;padding:0;height:100%;width:100%;background:#000;color:#ffa500}
+      #openfl-content{background:#000;width:100%;height:100%}
+      #loading{position:absolute;z-index:15;top:60%;left:50%;transform:translate(-50%,0);background:#000}
+      #loading img{display:inline-block}
+      footer{background:#000;padding:16px 0;text-align:center;color:#ccc;font-size:14px;border-top:1px solid #222}
+      html,body,#container{margin:0;padding:0;width:100%!important;height:100%!important;overflow:hidden!important}
+    </style>
+    
     <script src="https://cdn.jsdelivr.net/gh/brodeliver/bb@12/BasketBros.js?th=644"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
     <script>
-      (function(){window.SendEvent=window.SendEvent||function(n,a,e){},window.RecordSession=window.RecordSession||function(){};function n(){window.Main&&typeof window.Main.DoneInterstitialAd=="function"&&window.Main.DoneInterstitialAd(!1)}function a(){window.Main&&typeof window.Main.DoneVideoAd=="function"&&window.Main.DoneVideoAd()}window.ShowAdBreak=function(){n()},window.ShowVideo=function(){a()},window.ShowAd=function(){n()},window.ShowInterstitial=function(){n()},window.ShowRewarded=function(){a()};for(var e=1;e<=10;e++)window["ShowAd"+e]=function(){n()},window["ShowVideo"+e]=function(){a()};window.adBreak=function(n){return n&&n.before&&n.before(),n&&n.after&&n.after(),Promise.resolve()},window.rewardedBreak=function(n){return n&&n.before&&n.before(),n&&n.after&&n.after(),Promise.resolve({completed:!1})},window.PauseGame=window.PauseGame||function(){},window.ResumeGame=window.ResumeGame||function(){};var o=!1;function i(){o=!0}function t(){o=!1}window.GamePlayStart=window.GamePlayStart||i,window.GamePlayStop=window.GamePlayStop||t,window.GameplayStart=window.GameplayStart||i,window.GameplayStop=window.GameplayStop||t,window.gameplayStart=window.gameplayStart||i,window.gameplayStop=window.gameplayStop||t,window.GameStart=window.GameStart||i,window.GameStop=window.GameStop||t})();
-      window.addEventListener("touchmove",(function(n){n.preventDefault()}),{capture:!1,passive:!1}),typeof window.devicePixelRatio!="undefined"&&window.devicePixelRatio>2&&document.getElementById("viewport").setAttribute("content","width=device-width, initial-scale="+(2/window.devicePixelRatio)+", user-scalable=no"),window.addEventListener("keydown",(function(n){(32===n.keyCode||38===n.keyCode||40===n.keyCode)&&n.target===document.body&&n.preventDefault()}));
-      const firebaseConfig={apiKey:"AIzaSyDeQ1CV2ZfZg4SJlu9CEWfpHG3--xpt-oU",authDomain:"basket-bros-43586.firebaseapp.com",projectId:"basket-bros-43586",storageBucket:"basket-bros-43586.appspot.com",messagingSenderId:"179647849243",appId:"1:179647849243:web:87b99f44ca23f8a11729be"};try{firebase.initializeApp(firebaseConfig);const n=firebase.auth(),a=firebase.firestore();var userData="";function triggerSignIn(){var a=new firebase.auth.GoogleAuthProvider;n.signInWithPopup(a)}function saveGameData(e){try{var o=n.currentUser&&n.currentUser.uid;o&&(userData=e,a.collection("users").doc(o).set({gameData:e}))}catch(n){}}function loadGameData(){return userData}function loadGameDataAsync(){var e=n.currentUser&&n.currentUser.uid;e&&a.collection("users").doc(e).get().then((function(n){n.exists&&(userData=n.data().gameData,typeof Main!="undefined"&&Main.LoadDataComplete&&Main.LoadDataComplete())}))}n.onAuthStateChanged((function(n){n&&loadGameDataAsync()})),window.triggerSignIn=triggerSignIn,window.saveGameData=saveGameData,window.loadGameData=loadGameData,window.loadGameDataAsync=loadGameDataAsync,window.signOut=function(){n.signOut().then((()=>{typeof Main!="undefined"&&Main.SignOutComplete&&Main.SignOutComplete()}))},window.isUserLoggedIn=function(){return n.currentUser!==null}}catch(n){}
+      (function(){
+        window.SendEvent=window.SendEvent||function(n,a,e){},window.RecordSession=window.RecordSession||function(){};
+        function n(){window.Main&&typeof window.Main.DoneInterstitialAd=="function"&&window.Main.DoneInterstitialAd(!1)}
+        function a(){window.Main&&typeof window.Main.DoneVideoAd=="function"&&window.Main.DoneVideoAd()}
+        window.ShowAdBreak=function(){n()},window.ShowVideo=function(){a()},window.ShowAd=function(){n()},window.ShowInterstitial=function(){n()},window.ShowRewarded=function(){a()};
+        for(var e=1;e<=10;e++)window["ShowAd"+e]=function(){n()},window["ShowVideo"+e]=function(){a()};
+        window.adBreak=function(n){return n&&n.before&&n.before(),n&&n.after&&n.after(),Promise.resolve()},
+        window.rewardedBreak=function(n){return n&&n.before&&n.before(),n&&n.after&&n.after(),Promise.resolve({completed:!1})},
+        window.PauseGame=window.PauseGame||function(){},window.ResumeGame=window.ResumeGame||function(){};
+        var o=!1;function i(){o=!0}function t(){o=!1}
+        window.GamePlayStart=window.GamePlayStart||i,window.GamePlayStop=window.GamePlayStop||t,window.GameplayStart=window.GameplayStart||i,window.GameplayStop=window.GameplayStop||t,window.gameplayStart=window.gameplayStart||i,window.gameplayStop=window.gameplayStop||t,window.GameStart=window.GameStart||i,window.GameStop=window.GameStop||t
+      })();
+
+      window.addEventListener("touchmove",(function(n){n.preventDefault()}),{capture:!1,passive:!1});
+      typeof window.devicePixelRatio!="undefined"&&window.devicePixelRatio>2&&document.getElementById("viewport").setAttribute("content","width=device-width, initial-scale="+(2/window.devicePixelRatio)+", user-scalable=no");
+      window.addEventListener("keydown",(function(n){(32===n.keyCode||38===n.keyCode||40===n.keyCode)&&n.target===document.body&&n.preventDefault()}));
+
+      // Dummy functies om foutmeldingen in het spel te voorkomen nu Firebase weg is
+      var userData = "";
+      window.triggerSignIn = function() { console.log("Inloggen uitgeschakeld"); };
+      window.saveGameData = function(e) { userData = e; };
+      window.loadGameData = function() { return userData; };
+      window.loadGameDataAsync = function() { 
+        if(typeof Main !== "undefined" && Main.LoadDataComplete) Main.LoadDataComplete(); 
+      };
+      window.signOut = function() { 
+        if(typeof Main !== "undefined" && Main.SignOutComplete) Main.SignOutComplete(); 
+      };
+      window.isUserLoggedIn = function() { return false; };
+
       ((s)=>{const t=document.createElement("style");t.textContent=`${s.join(",")}{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;position:fixed!important;top:-9999px!important}`,document.documentElement.appendChild(t);const e=()=>s.forEach(s=>{document.querySelectorAll(s).forEach(s=>s.remove())});new MutationObserver(e).observe(document.documentElement,{childList:!0,subtree:!0}),e();const o=(s)=>{try{Object.defineProperty(window,s,{value:{cmd:[],display:()=>{},enableServices:()=>{},defineSlot:()=>({addService:()=>({setTargeting:()=>({})})})},writable:!1,configurable:!1})}catch(s){}};["googletag","google"].forEach(o)})(["#promo","#imaContainer","#imaContainer_new","#imaVideo","#imaVideo2","#preroll_banner_container",".promo-container",".banner"]);
     </script>
   </head>
