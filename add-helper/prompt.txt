@@ -4,7 +4,7 @@ Je bent een expert in het opschonen en formatteren van HTML-code. Ik zal je een 
 2.  **Verwijder metadata:** Haal de <title> tag en alle <link rel="icon"> tags weg.
 3.  **Behoud functionaliteit:** Zorg dat de eigenlijke content (zoals de Ruffle game loader of andere embeds) intact blijft en gewoon werkt.
 4.  **Formatteer de output:**
-    *   De HTML-structuur (tags, indentatie) moet netjes en leesbaar zijn.
+    *   De HTML-structuur (tags, indentatie) moet netjes en leesbaar zijn en moeten indented zijn.
     *   Alle CSS binnen <style> tags moet volledig gecomprimeerd (minified) zijn op één regel.
     *   Alle JavaScript binnen <script> tags moet volledig gecomprimeerd (minified) zijn op één regel.
 5.  **Output:** Geef alleen de uiteindelijke, schone HTML-code terug in een codeblok, zonder extra uitleg.
