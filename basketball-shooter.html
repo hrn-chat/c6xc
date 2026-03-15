@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+  <base href="https://481599868-atari-embeds.googleusercontent.com/embeds/16cb204cf3a9d4d223a0a3fd8b0eec5d/inner-frame-minified.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.nl.smB9ZBzsx3Q.O%2Fd%3D1%2Frs%3DAHpOoo8PvrmMA6wANKXRd1bDIIeCmjUiSw%2Fm%3D__features__">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/style.css">
+  <style>html,body,#container{margin:0;padding:0;width:100%!important;height:100%!important;overflow:hidden!important}</style>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/libs/pixi.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/libs/pixi-spine.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/utill/math.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/utill/vector2.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/utill/aabb2.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/utill/matrix22.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/utill/tween.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/utill/keycode.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/utill/csvParse.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/utill/textFormat.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/utill/utill.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/ui/ui_button.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/ui/ui_bitmapText.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/ui/ui_bitmapText2.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/ui/ui_paintArea.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/ui/ui_inputText.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/ui/ui_gauge_circle.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/ui/ui_scrollArea.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/math.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/util.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/shape.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/shape_circle.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/shape_segment.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/shape_poly.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/joint.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/joint_angle.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/joint_distance.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/joint_mouse.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/joint_prismatic.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/joint_revolute.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/joint_rope.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/joint_weld.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/joint_wheel.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/contact.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/collision.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/contactsolver.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physicsrus/space.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physics/physicsManager.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/physics/triggerUpdate.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/componenet/component.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/componenet/renderer.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/componenet/renderer_sprite.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/componenet/transform.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/componenet/goDebug.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/componenet/rusBody.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/componenet/triggerBody.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/gameObject.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/game.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/update.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/time.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/camera.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/sceneManager.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/world.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/actionData.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/actionManager.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/signal.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/containerManager.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/signalManager.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/debugManager.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/pointerManager.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/soundManager.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/httpManager.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/framework/core/factory.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/data/data.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/controller/ballController.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/controller/aiController.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/controller/singleMode.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/controller/doubleMode.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/controller/challengeMode.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/controller/goalController.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/controller/timeController.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/effect/lineTrace.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/effect/goalEffect.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/effect/pointEffect.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/effect/timeEffect.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/gameobject/goalpost.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/gameobject/ball.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/gameobject/player.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/gameobject/scoreBoard.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/gameobject/goalSegment.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/gameobject/playerScoreUI.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/gameobject/background.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/game/gameobject/lifeBar.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/scene/testScene.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/scene/scene_preload.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/scene/scene_lobby.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/scene/scene_ingame.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/scene/scene_modeSelect.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/network/networkManager.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/network/client.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yrgen73/basshoot@cf8f14d5d03e4d427fb8b00aa6dc4924a1b823af/scripts/main.js"></script>
+  <script>
+    ((s)=>{const t=document.createElement("style");t.textContent=`${s.join(",")}{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;position:fixed!important;top:-9999px!important}`,document.documentElement.appendChild(t);const e=()=>s.forEach(s=>{document.querySelectorAll(s).forEach(s=>s.remove())});new MutationObserver(e).observe(document.documentElement,{childList:!0,subtree:!0}),e();const o=(s)=>{try{Object.defineProperty(window,s,{value:{cmd:[],display:()=>{},enableServices:()=>{},defineSlot:()=>({addService:()=>({setTargeting:()=>({})})})},writable:!1,configurable:!1})}catch(s){}};["googletag","google"].forEach(o)})(["#promo","#imaContainer","#imaContainer_new","#imaVideo","#imaVideo2","#preroll_banner_container",".promo-container",".banner"]);
+  </script>
+</body>
+</html>
