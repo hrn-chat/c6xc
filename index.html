@@ -3,251 +3,241 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>C6XC Collection</title>
+  <title></title>
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     :root {
-      --bg: #111;
-      --surface: #1a1a1a;
-      --border: #333;
-      --text: #ddd;
-      --accent: #4caf50;
-      --font: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Monaco, Consolas, monospace;
+      --bg: #080808;
+      --surface: #111;
+      --border: #222;
+      --text-muted: #555;
+      --text-main: #ccc;
+      --accent: #00ff88;
+      --font: 'JetBrains Mono', 'ui-monospace', monospace;
     }
+
+    * { scrollbar-width: thin; scrollbar-color: #222 var(--bg); }
+    ::-webkit-scrollbar { width: 3px; height: 3px; }
+    ::-webkit-scrollbar-thumb { background: #222; }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       background: var(--bg);
-      color: var(--text);
+      color: var(--text-muted);
       font-family: var(--font);
-      font-size: 13px;
+      font-size: 13px; /* Tekst groter gemaakt */
       height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
+
     header {
-      padding: 10px 15px;
+      padding: 12px 20px;
       background: var(--surface);
       border-bottom: 1px solid var(--border);
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
-      gap: 10px;
+      gap: 15px;
     }
-    .brand { font-weight: bold; color: #fff; }
-    .search-box {
+
+    .search-input {
       flex: 1;
-      min-width: 150px;
       background: #000;
       border: 1px solid var(--border);
       color: var(--accent);
-      padding: 8px 10px;
+      padding: 6px 12px;
       font-family: inherit;
+      font-size: 13px;
       outline: none;
+      border-radius: 2px;
     }
-    .search-box:focus { border-color: var(--accent); }
-    .stats { white-space: nowrap; color: #888; font-size: 11px; }
+
+    .action-bar {
+      padding: 6px 20px;
+      background: #0a0a0a;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      font-size: 11px; /* Stats iets kleiner dan de hoofdtekst */
+      letter-spacing: 0.5px;
+    }
+
+    .stat b { color: var(--accent); font-weight: normal; }
+
+    main { flex: 1; display: flex; overflow: hidden; }
     
-    main { flex: 1; overflow-y: auto; background: #0c0c0c; display: flex; flex-direction: column; }
-    .table-container { flex: 1; overflow-y: auto; }
+    .table-container { flex: 1; overflow-y: auto; background: #050505; }
     table { width: 100%; border-collapse: collapse; table-layout: fixed; }
     th { 
       position: sticky; top: 0; background: var(--surface); 
-      text-align: left; padding: 10px 15px; border-bottom: 1px solid var(--border);
-      color: #888; text-transform: uppercase; font-size: 10px; letter-spacing: 1px;
-      z-index: 10;
+      text-align: left; padding: 10px 20px; border-bottom: 1px solid var(--border);
+      color: #333; font-size: 10px; text-transform: uppercase; z-index: 10;
     }
-    td { padding: 8px 15px; border-bottom: 1px solid #181818; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    tr:hover { background: #1a1a1a; }
+    td { padding: 8px 20px; border-bottom: 1px solid #0f0f0f; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     
-    a { color: var(--text); text-decoration: none; display: block; }
-    tr:hover a { color: var(--accent); }
+    tr { cursor: pointer; }
+    tr:hover { background: rgba(0, 255, 136, 0.03); }
+    tr.is-pinned { border-left: 3px solid var(--accent); background: rgba(0, 255, 136, 0.01); }
+    tr.is-pinned td:first-child { color: var(--accent); font-weight: bold; }
     
-    .btn {
-      background: #222; color: #ccc; border: 1px solid var(--border);
-      padding: 6px 10px; cursor: pointer; font-size: 11px; text-transform: uppercase;
-    }
-    .btn:hover { background: #333; color: #fff; }
+    .game-link { color: var(--text-main); text-decoration: none; display: block; }
+    .game-link:hover { color: var(--accent); text-decoration: underline; }
 
-    /* JSON Section */
-    .json-section {
-      height: 200px;
-      background: #050505;
-      border-top: 2px solid var(--border);
-      display: flex;
-      flex-direction: column;
-    }
-    .json-header {
-      background: #111;
-      padding: 5px 15px;
-      font-size: 10px;
-      color: #666;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    #json-output {
-      flex: 1;
-      width: 100%;
+    .sidebar { width: 350px; border-left: 1px solid var(--border); background: #080808; display: flex; flex-direction: column; }
+    #json-preview { flex: 1; width: 100%; background: #030303; color: #006633; border: none; padding: 15px; font-size: 11px; resize: none; outline: none; line-height: 1.4; }
+
+    .btn-icon {
       background: transparent;
-      color: #888;
-      border: none;
-      padding: 10px;
-      font-family: var(--font);
-      font-size: 11px;
-      resize: none;
-      outline: none;
+      color: #444;
+      border: 1px solid transparent;
+      padding: 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      transition: color 0.1s;
     }
+    .btn-icon:hover, .btn-icon.active { color: var(--accent); }
+    .btn-icon i { width: 10px; height: 10px; } /* Iconen blijven klein */
 
-    @media (max-width: 600px) {
-      .col-file { display: none; }
-      th:nth-child(3), td:nth-child(3) { display: none; }
-      header { gap: 8px; }
-      .stats { order: 3; width: 100%; text-align: center; border-top: 1px solid #222; padding-top: 5px; }
-      .json-section { height: 150px; }
-    }
+    #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 100; }
+    .modal { background: var(--surface); border: 1px solid var(--border); padding: 20px; width: 300px; }
 
-    #overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-      display: none; align-items: center; justify-content: center; z-index: 100;
-    }
-    .modal { background: var(--surface); border: 1px solid var(--border); padding: 20px; width: 90%; max-width: 320px; }
+    @media (max-width: 1000px) { .sidebar { display: none; } }
   </style>
 </head>
 <body>
 
 <header>
-  <div class="brand">C6XC_COLL</div>
-  <input type="text" id="filter" class="search-box" placeholder="Filter games..." spellcheck="false" autocomplete="off">
-  <button class="btn" onclick="toggleCfg()">CFG</button>
-  <div class="stats">
-    <span id="count">0</span> ITEMS | <span id="rate">--/--</span>
-  </div>
+  <input type="text" id="search-filter" class="search-input" placeholder="filter_resources..." autocomplete="off">
+  <button class="btn-icon" id="toggle-favorites" onclick="toggleFavoriteView()"><i data-lucide="star"></i></button>
+  <button class="btn-icon" onclick="toggleConfig()"><i data-lucide="settings"></i></button>
 </header>
+
+<div class="action-bar">
+  <div class="stat">FILES: <b id="stat-count">0</b></div>
+  <div class="stat">SIZE: <b id="stat-size">0 KB</b></div>
+  <div class="stat">RATE: <b id="stat-rate">--</b></div>
+  <div style="flex: 1"></div>
+  <button class="btn-icon" onclick="downloadData()"><i data-lucide="download"></i></button>
+  <button class="btn-icon" onclick="copyRawData()"><i data-lucide="copy"></i></button>
+</div>
 
 <main>
   <div class="table-container">
     <table>
       <thead>
         <tr>
-          <th style="width: 55px;">ID</th>
-          <th>NAME</th>
-          <th class="col-file" style="width: 35%;">FILE</th>
+          <th>Resource</th>
+          <th style="width: 100px;">Size</th>
+          <th style="width: 30%;">Path</th>
         </tr>
       </thead>
-      <tbody id="list"></tbody>
+      <tbody id="game-list"></tbody>
     </table>
   </div>
-
-  <div class="json-section">
-    <div class="json-header">
-      <span>GEN_DATA: RAW_JSON_ARRAY</span>
-      <button class="btn" style="padding: 2px 6px; font-size: 9px;" onclick="copyJson()">Copy JSON</button>
-    </div>
-    <textarea id="json-output" readonly placeholder="Waiting for data..."></textarea>
-  </div>
+  <aside class="sidebar">
+    <textarea id="json-preview" readonly spellcheck="false"></textarea>
+  </aside>
 </main>
 
 <div id="overlay">
   <div class="modal">
-    <div style="margin-bottom: 10px; font-size: 11px;">GITHUB_TOKEN:</div>
-    <input type="password" id="token" class="search-box" style="width: 100%; margin-bottom: 15px;">
+    <input type="password" id="auth-token" class="search-input" style="width: 100%; margin-bottom: 15px;" placeholder="token">
     <div style="display: flex; gap: 10px;">
-      <button class="btn" style="flex: 1;" onclick="saveCfg()">SAVE</button>
-      <button class="btn" style="flex: 1;" onclick="toggleCfg()">ABORT</button>
+      <button class="button btn-icon" style="flex: 1; border: 1px solid #222; padding: 8px;" onclick="saveConfiguration()">SAVE</button>
+      <button class="button btn-icon" style="flex: 1; border: 1px solid #222; padding: 8px;" onclick="toggleConfig()">CLOSE</button>
     </div>
   </div>
 </div>
 
 <script>
-  let games = [];
+  let allGames = [];
+  let filterOnlyPinned = false;
   const el = (id) => document.getElementById(id);
 
-  function formatName(str) {
-    return str.replace(/-/g, ' ')
-              .split(' ')
-              .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-              .join(' ');
+  function formatDisplayName(fileName) {
+    const raw = fileName.replace('.html', '');
+    if (raw === '1v1-lol') return '1v1.lol';
+    return raw.replace(/-/g, ' ').split(' ').map(w => w.charAt(0).toUpperCase() + wordSlice(w)).join(' ');
+  }
+  
+  function wordSlice(w) { return w.slice(1).toLowerCase(); }
+
+  function getPinned() { return JSON.parse(localStorage.getItem('c6_p') || '[]'); }
+
+  function handleRowClick(e, path) {
+    if (e.target.closest('a')) return;
+    let p = getPinned();
+    p = p.includes(path) ? p.filter(x => x !== path) : [...p, path];
+    localStorage.setItem('c6_p', JSON.stringify(p));
+    applyFilters();
   }
 
-  function getRepo() {
-    const h = window.location.hostname;
-    if (h.endsWith(".github.io")) {
-      const u = h.split(".")[0];
-      const p = window.location.pathname.split("/").filter(x => x).shift();
-      return { u, r: p || h };
+  function toggleFavoriteView() {
+    filterOnlyPinned = !filterOnlyPinned;
+    el('toggle-favorites').classList.toggle('active', filterOnlyPinned);
+    applyFilters();
+  }
+
+  async function fetchCollection() {
+    const host = window.location.hostname;
+    let u = "HyperRushNet", r = "c6xc";
+    if (host.endsWith(".github.io")) {
+      u = host.split(".")[0];
+      r = window.location.pathname.split("/").filter(x => x).shift() || host;
     }
-    return { u: "HyperRushNet", r: "c6xc" };
-  }
-
-  async function load() {
-    const { u, r } = getRepo();
-    const token = localStorage.getItem('c6xc_auth');
+    const t = localStorage.getItem('c6_t');
     const h = { 'Accept': 'application/vnd.github.v3+json' };
-    if (token) h['Authorization'] = `token ${token}`;
+    if (t) h['Authorization'] = `token ${t}`;
 
     try {
       const res = await fetch(`https://api.github.com/repos/${u}/${r}/contents/`, { headers: h });
-      if (!res.ok) throw res.status;
-
-      el('rate').textContent = `${res.headers.get('X-RateLimit-Remaining')}/${res.headers.get('X-RateLimit-Limit')}`;
-      
       const data = await res.json();
-      games = data
-        .filter(f => f.type === 'file' && f.name.endsWith('.html') && f.name !== 'index.html')
-        .map((f, i) => ({ 
-          name: formatName(f.name.replace('.html', '')), 
-          path: f.name,
-          size: f.size
-        }))
-        .sort((a, b) => a.name.localeCompare(b.name));
-      
-      render(games);
-    } catch (e) {
-      el('list').innerHTML = `<tr><td colspan="3" style="color:#ff4444; padding: 20px;">ERR_FETCH: ${e}</td></tr>`;
-    }
+      el('stat-rate').textContent = res.headers.get('X-RateLimit-Remaining');
+      allGames = data.filter(f => f.type === 'file' && f.name.endsWith('.html') && f.name !== 'index.html')
+        .map(f => ({ name: formatDisplayName(f.name), path: f.name, size: f.size }))
+        .sort((a,b) => a.name.localeCompare(b.name));
+      applyFilters();
+    } catch (e) { console.error(e); }
   }
 
-  function render(list) {
-    el('list').innerHTML = list.map((g, i) => `
-      <tr>
-        <td style="color: #555;">${(i + 1).toString().padStart(3, '0')}</td>
-        <td><a href="./${g.path}">${g.name}</a></td>
-        <td class="col-file" style="color: #555;">${g.path}</td>
+  function applyFilters() {
+    const q = el('search-filter').value.toLowerCase();
+    const p = getPinned();
+    const f = allGames.filter(g => (g.name.toLowerCase().includes(q) || g.path.toLowerCase().includes(q)) && (filterOnlyPinned ? p.includes(g.path) : true));
+    renderTable(f);
+  }
+
+  function renderTable(data) {
+    const p = getPinned();
+    el('game-list').innerHTML = data.map(g => `
+      <tr class="${p.includes(g.path) ? 'is-pinned' : ''}" onclick="handleRowClick(event, '${g.path}')">
+        <td><a href="./${g.path}" class="game-link" target="_blank">${g.name}</a></td>
+        <td style="color: #444;">${(g.size / 1024).toFixed(1)} KB</td>
+        <td style="color: #1a1a1a; font-size: 11px;">${g.path}</td>
       </tr>
     `).join('');
-    el('count').textContent = list.length;
-    
-    // Update JSON output
-    el('json-output').value = JSON.stringify(list, null, 2);
+    el('stat-count').textContent = data.length;
+    el('stat-size').textContent = (data.reduce((a, b) => a + b.size, 0) / 1024).toFixed(0) + ' KB';
+    el('json-preview').value = JSON.stringify(data, null, 2);
+    lucide.createIcons();
   }
 
-  el('filter').oninput = (e) => {
-    const q = e.target.value.toLowerCase();
-    const filtered = games.filter(g => g.name.toLowerCase().includes(q) || g.path.toLowerCase().includes(q));
-    render(filtered);
-  };
-
-  function copyJson() {
-    const area = el('json-output');
-    area.select();
-    document.execCommand('copy');
-    alert('JSON copied to clipboard');
+  function copyRawData() { el('json-preview').select(); document.execCommand('copy'); }
+  function downloadData() {
+    const blob = new Blob([el('json-preview').value], {type: 'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'data.json'; a.click();
   }
-
-  window.onkeydown = (e) => { if (e.key === '/') { e.preventDefault(); el('filter').focus(); } };
+  function toggleConfig() { el('overlay').style.display = el('overlay').style.display === 'flex' ? 'none' : 'flex'; }
+  function saveConfiguration() { localStorage.setItem('c6_t', el('auth-token').value.trim()); toggleConfig(); fetchCollection(); }
   
-  function toggleCfg() { 
-    const v = el('overlay');
-    v.style.display = v.style.display === 'flex' ? 'none' : 'flex';
-    if (v.style.display === 'flex') el('token').value = localStorage.getItem('c6xc_auth') || '';
-  }
+  el('search-filter').oninput = applyFilters;
+  window.onkeydown = (e) => { if (e.key === '/') { e.preventDefault(); el('search-filter').focus(); } };
   
-  function saveCfg() { 
-    localStorage.setItem('c6xc_auth', el('token').value.trim()); 
-    toggleCfg(); 
-    load(); 
-  }
-
-  load();
+  fetchCollection();
 </script>
 </body>
 </html>
