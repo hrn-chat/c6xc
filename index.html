@@ -1,453 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C6XC Game Collection</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        display: ['Space Grotesk', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        :root {
-            --bg: #0a0a0b;
-            --bg-elevated: #111113;
-            --fg: #e8e8e8;
-            --muted: #6b6b6b;
-            --accent: #00ff88;
-            --accent-dim: rgba(0, 255, 136, 0.1);
-            --border: #222225;
-            --card: #161618;
-            --danger: #ff4d4d;
-            --row-height: 52px; /* Fixed height for virtualization */
-        }
-        * { box-sizing: border-box; }
-        html { height: 100%; }
-        body { 
-            font-family: 'Space Grotesk', sans-serif; 
-            background: var(--bg); 
-            color: var(--fg); 
-            height: 100%; 
-            overflow: hidden; /* Prevent body scroll, use app layout */
-        }
-        
-        /* Background */
-        .grid-bg { background-image: linear-gradient(rgba(0,255,136,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,.03) 1px,transparent 1px); background-size: 60px 60px; }
-        .gradient-overlay { background: radial-gradient(ellipse at top,rgba(0,255,136,.08) 0%,transparent 60%); position: fixed; inset: 0; pointer-events: none; z-index: 0;}
-
-        /* Layout */
-        .app-shell {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            position: relative;
-            z-index: 10;
-        }
-
-        /* Components */
-        .game-link {
-            font-family: 'JetBrains Mono', monospace;
-            background: var(--card);
-            border: 1px solid var(--border);
-            color: var(--fg);
-            transition: all .15s ease;
-            position: absolute; /* Required for virtual list positioning */
-            left: 0; right: 0;
-            height: calc(var(--row-height) - 8px);
-            display: flex;
-            align-items: center;
-        }
-        .game-link:hover { background: var(--bg-elevated); border-color: var(--accent); color: var(--accent); z-index: 10; }
-        .game-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; z-index: 20; }
-
-        .search-input {
-            font-family: 'JetBrains Mono', monospace;
-            background: var(--card);
-            border: 1px solid var(--border);
-            color: var(--fg);
-            transition: all .2s ease;
-        }
-        .search-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
-        .search-input::placeholder { color: var(--muted); }
-
-        /* Virtual List Container */
-        .viewport {
-            flex: 1;
-            overflow-y: auto;
-            position: relative;
-            scroll-behavior: auto; /* Smooth scroll fights with virtualization */
-        }
-        .scroll-content {
-            position: relative;
-            width: 100%;
-        }
-
-        /* Spinner & States */
-        .spinner { width: 24px; height: 24px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin .8s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Modal */
-        .modal-backdrop {
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.2s ease;
-            z-index: 100;
-        }
-        .modal-backdrop.active { opacity: 1; visibility: visible; }
-        .modal-content { transform: scale(0.95); transition: transform 0.2s ease; }
-        .modal-backdrop.active .modal-content { transform: scale(1); }
-
-        /* Rate Bar */
-        .rate-bar-bg { background: var(--border); border-radius: 999px; height: 4px; overflow: hidden; flex: 1; max-width: 100px; }
-        .rate-bar-fill { height: 100%; background: var(--accent); transition: width 0.3s ease; }
-        .rate-bar-fill.critical { background: var(--danger); }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
-    </style>
-</head>
-<body class="grid-bg">
-    <div class="gradient-overlay"></div>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C6XC Collection</title>
+  <style>
+    :root {
+      --bg: #111;
+      --surface: #1a1a1a;
+      --border: #333;
+      --text: #ddd;
+      --accent: #4caf50;
+      --font: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Monaco, Consolas, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 13px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      padding: 10px 15px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand { font-weight: bold; color: #fff; }
+    .search-box {
+      flex: 1;
+      min-width: 150px;
+      background: #000;
+      border: 1px solid var(--border);
+      color: var(--accent);
+      padding: 8px 10px;
+      font-family: inherit;
+      outline: none;
+    }
+    .search-box:focus { border-color: var(--accent); }
+    .stats { white-space: nowrap; color: #888; font-size: 11px; }
     
-    <!-- Settings Modal -->
-    <div id="settings-modal" class="modal-backdrop fixed inset-0 flex items-center justify-center p-4">
-        <div class="modal-content w-full max-w-md bg-[var(--bg-elevated)] border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden">
-            <div class="p-6 border-b border-[var(--border)] flex justify-between items-center">
-                <h2 class="text-lg font-semibold">API Configuration</h2>
-                <button id="close-modal-btn" class="text-[var(--muted)] hover:text-[var(--fg)] p-1" aria-label="Close">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
-            </div>
-            <div class="p-6">
-                <label class="block text-sm text-[var(--muted)] mb-2">GitHub Personal Access Token</label>
-                <input type="password" id="pat-input" class="search-input w-full px-4 py-3 rounded-lg text-sm mb-3" placeholder="ghp_...">
-                <p class="text-xs text-[var(--muted)] mb-4">Increases limit to 5000 req/hr. Stored locally.</p>
-                <div class="flex gap-3">
-                    <button id="save-pat-btn" class="flex-1 px-4 py-2.5 rounded-lg bg-[var(--accent)] text-black text-sm font-semibold hover:opacity-90">Save</button>
-                    <button id="clear-pat-btn" class="px-4 py-2.5 rounded-lg bg-[var(--card)] border border-[var(--border)] text-sm text-[var(--muted)] hover:text-[var(--danger)] hover:border-[var(--danger)]">Clear</button>
-                </div>
-            </div>
-        </div>
+    main { flex: 1; overflow-y: auto; background: #0c0c0c; display: flex; flex-direction: column; }
+    .table-container { flex: 1; overflow-y: auto; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    th { 
+      position: sticky; top: 0; background: var(--surface); 
+      text-align: left; padding: 10px 15px; border-bottom: 1px solid var(--border);
+      color: #888; text-transform: uppercase; font-size: 10px; letter-spacing: 1px;
+      z-index: 10;
+    }
+    td { padding: 8px 15px; border-bottom: 1px solid #181818; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    tr:hover { background: #1a1a1a; }
+    
+    a { color: var(--text); text-decoration: none; display: block; }
+    tr:hover a { color: var(--accent); }
+    
+    .btn {
+      background: #222; color: #ccc; border: 1px solid var(--border);
+      padding: 6px 10px; cursor: pointer; font-size: 11px; text-transform: uppercase;
+    }
+    .btn:hover { background: #333; color: #fff; }
+
+    /* JSON Section */
+    .json-section {
+      height: 200px;
+      background: #050505;
+      border-top: 2px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+    .json-header {
+      background: #111;
+      padding: 5px 15px;
+      font-size: 10px;
+      color: #666;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #json-output {
+      flex: 1;
+      width: 100%;
+      background: transparent;
+      color: #888;
+      border: none;
+      padding: 10px;
+      font-family: var(--font);
+      font-size: 11px;
+      resize: none;
+      outline: none;
+    }
+
+    @media (max-width: 600px) {
+      .col-file { display: none; }
+      th:nth-child(3), td:nth-child(3) { display: none; }
+      header { gap: 8px; }
+      .stats { order: 3; width: 100%; text-align: center; border-top: 1px solid #222; padding-top: 5px; }
+      .json-section { height: 150px; }
+    }
+
+    #overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+      display: none; align-items: center; justify-content: center; z-index: 100;
+    }
+    .modal { background: var(--surface); border: 1px solid var(--border); padding: 20px; width: 90%; max-width: 320px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="brand">C6XC_COLL</div>
+  <input type="text" id="filter" class="search-box" placeholder="Filter games..." spellcheck="false" autocomplete="off">
+  <button class="btn" onclick="toggleCfg()">CFG</button>
+  <div class="stats">
+    <span id="count">0</span> ITEMS | <span id="rate">--/--</span>
+  </div>
+</header>
+
+<main>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 55px;">ID</th>
+          <th>NAME</th>
+          <th class="col-file" style="width: 35%;">FILE</th>
+        </tr>
+      </thead>
+      <tbody id="list"></tbody>
+    </table>
+  </div>
+
+  <div class="json-section">
+    <div class="json-header">
+      <span>GEN_DATA: RAW_JSON_ARRAY</span>
+      <button class="btn" style="padding: 2px 6px; font-size: 9px;" onclick="copyJson()">Copy JSON</button>
     </div>
+    <textarea id="json-output" readonly placeholder="Waiting for data..."></textarea>
+  </div>
+</main>
 
-    <div class="app-shell">
-        <!-- Top Bar -->
-        <header class="flex-shrink-0 border-b border-[var(--border)] bg-[var(--bg-elevated)]/80 backdrop-blur-md z-20">
-            <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-                <div class="flex items-center gap-3 min-w-0">
-                    <h1 class="text-lg font-bold tracking-tight truncate"><span class="text-[var(--accent)]">C6XC</span> Collection</h1>
-                    <span class="hidden sm:inline-flex items-center gap-2 px-2 py-0.5 rounded-full border border-[var(--border)] bg-[var(--card)] text-xs font-mono text-[var(--muted)]">
-                        <span id="game-count-header">...</span> games
-                    </span>
-                </div>
-
-                <!-- Center: Search -->
-                <div class="flex-1 max-w-xl">
-                    <input type="text" id="search-input" class="search-input w-full px-4 py-2 rounded-lg text-sm" placeholder="Search games... (/)" aria-label="Search games">
-                </div>
-
-                <!-- Right: Status & Actions -->
-                <div class="flex items-center gap-4">
-                    <div class="hidden sm:flex items-center gap-2 text-xs" title="API Rate Limit">
-                        <div class="rate-bar-bg"><div id="rate-bar-fill" class="rate-bar-fill" style="width: 0%"></div></div>
-                        <span id="rate-limit-text" class="font-mono text-[var(--muted)]">--/--</span>
-                    </div>
-                    <button id="open-settings-btn" class="p-2 rounded-lg hover:bg-[var(--card)] text-[var(--muted)] hover:text-[var(--fg)] transition-colors" aria-label="Settings">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                    </button>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Viewport -->
-        <main id="viewport" class="viewport">
-            <div id="scroll-content" class="scroll-content">
-                <ul id="games-list" class="grid gap-2 p-4 max-w-5xl mx-auto" role="list"></ul>
-            </div>
-            
-            <!-- Overlay States -->
-            <div id="loading-state" class="absolute inset-0 flex flex-col items-center justify-center bg-[var(--bg)]/90 z-30">
-                <div class="spinner mb-4"></div>
-                <p class="text-[var(--muted)] text-sm">Connecting to GitHub API...</p>
-            </div>
-            <div id="error-state" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-[var(--bg)]/90 z-30">
-                <p class="text-[var(--danger)] mb-4 text-center px-4">Failed to load data.<br><span id="error-msg" class="text-xs text-[var(--muted)]"></span></p>
-                <button onclick="loadGames()" class="px-4 py-2 rounded-lg bg-[var(--accent)] text-black text-sm font-semibold">Retry</button>
-            </div>
-            <div id="empty-state" class="hidden absolute inset-0 flex flex-col items-center justify-center z-30">
-                <p class="text-[var(--muted)]">No games found matching your search.</p>
-            </div>
-        </main>
+<div id="overlay">
+  <div class="modal">
+    <div style="margin-bottom: 10px; font-size: 11px;">GITHUB_TOKEN:</div>
+    <input type="password" id="token" class="search-box" style="width: 100%; margin-bottom: 15px;">
+    <div style="display: flex; gap: 10px;">
+      <button class="btn" style="flex: 1;" onclick="saveCfg()">SAVE</button>
+      <button class="btn" style="flex: 1;" onclick="toggleCfg()">ABORT</button>
     </div>
+  </div>
+</div>
 
-    <script>
-        // --- Constants & Config ---
-        const ITEM_HEIGHT = 52; // Approximate height of one game row in px
-        const BUFFER = 5; // Extra items to render outside viewport
-        const STORAGE_KEY = "github_pat_c6xc";
+<script>
+  let games = [];
+  const el = (id) => document.getElementById(id);
 
-        // --- DOM Elements ---
-        const viewport = document.getElementById("viewport");
-        const scrollContent = document.getElementById("scroll-content");
-        const gamesList = document.getElementById("games-list");
-        const searchInput = document.getElementById("search-input");
-        const loadingState = document.getElementById("loading-state");
-        const errorState = document.getElementById("error-state");
-        const emptyState = document.getElementById("empty-state");
-        const gameCountHeader = document.getElementById("game-count-header");
-        const rateBarFill = document.getElementById("rate-bar-fill");
-        const rateLimitText = document.getElementById("rate-limit-text");
-        const errorMsg = document.getElementById("error-msg");
+  function formatName(str) {
+    return str.replace(/-/g, ' ')
+              .split(' ')
+              .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+              .join(' ');
+  }
 
-        // Modal
-        const modal = document.getElementById("settings-modal");
-        const openSettingsBtn = document.getElementById("open-settings-btn");
-        const closeModalBtn = document.getElementById("close-modal-btn");
-        const patInput = document.getElementById("pat-input");
-        const savePatBtn = document.getElementById("save-pat-btn");
-        const clearPatBtn = document.getElementById("clear-pat-btn");
+  function getRepo() {
+    const h = window.location.hostname;
+    if (h.endsWith(".github.io")) {
+      const u = h.split(".")[0];
+      const p = window.location.pathname.split("/").filter(x => x).shift();
+      return { u, r: p || h };
+    }
+    return { u: "HyperRushNet", r: "c6xc" };
+  }
 
-        // --- State ---
-        let allGames = [];
-        let filteredGames = [];
-        let visibleRange = { start: 0, end: 20 };
-        let isFetching = false;
+  async function load() {
+    const { u, r } = getRepo();
+    const token = localStorage.getItem('c6xc_auth');
+    const h = { 'Accept': 'application/vnd.github.v3+json' };
+    if (token) h['Authorization'] = `token ${token}`;
 
-        // --- Virtual Scrolling Logic ---
+    try {
+      const res = await fetch(`https://api.github.com/repos/${u}/${r}/contents/`, { headers: h });
+      if (!res.ok) throw res.status;
 
-        function updateVirtualList() {
-            if (isFetching) return;
+      el('rate').textContent = `${res.headers.get('X-RateLimit-Remaining')}/${res.headers.get('X-RateLimit-Limit')}`;
+      
+      const data = await res.json();
+      games = data
+        .filter(f => f.type === 'file' && f.name.endsWith('.html') && f.name !== 'index.html')
+        .map((f, i) => ({ 
+          name: formatName(f.name.replace('.html', '')), 
+          path: f.name,
+          size: f.size
+        }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+      
+      render(games);
+    } catch (e) {
+      el('list').innerHTML = `<tr><td colspan="3" style="color:#ff4444; padding: 20px;">ERR_FETCH: ${e}</td></tr>`;
+    }
+  }
 
-            const scrollTop = viewport.scrollTop;
-            const viewportHeight = viewport.clientHeight;
-            
-            // Calculate start and end indexes
-            const start = Math.max(0, Math.floor(scrollTop / ITEM_HEIGHT) - BUFFER);
-            const end = Math.min(
-                filteredGames.length, 
-                Math.ceil((scrollTop + viewportHeight) / ITEM_HEIGHT) + BUFFER
-            );
+  function render(list) {
+    el('list').innerHTML = list.map((g, i) => `
+      <tr>
+        <td style="color: #555;">${(i + 1).toString().padStart(3, '0')}</td>
+        <td><a href="./${g.path}">${g.name}</a></td>
+        <td class="col-file" style="color: #555;">${g.path}</td>
+      </tr>
+    `).join('');
+    el('count').textContent = list.length;
+    
+    // Update JSON output
+    el('json-output').value = JSON.stringify(list, null, 2);
+  }
 
-            // Only re-render if range changed significantly or on first run
-            // Using a simple check here, could be optimized further with dirty checking
-            if (start !== visibleRange.start || end !== visibleRange.end) {
-                visibleRange = { start, end };
-                renderVisibleItems();
-            }
-        }
+  el('filter').oninput = (e) => {
+    const q = e.target.value.toLowerCase();
+    const filtered = games.filter(g => g.name.toLowerCase().includes(q) || g.path.toLowerCase().includes(q));
+    render(filtered);
+  };
 
-        function renderVisibleItems() {
-            const fragment = document.createDocumentFragment();
-            const visibleItems = filteredGames.slice(visibleRange.start, visibleRange.end);
-            
-            // Set container height to total height to maintain scrollbar
-            const totalHeight = filteredGames.length * ITEM_HEIGHT;
-            scrollContent.style.height = `${totalHeight}px`;
-            
-            // Clear current list (efficient enough for ~20 items)
-            gamesList.innerHTML = "";
+  function copyJson() {
+    const area = el('json-output');
+    area.select();
+    document.execCommand('copy');
+    alert('JSON copied to clipboard');
+  }
 
-            visibleItems.forEach((game, index) => {
-                const i = visibleRange.start + index;
-                const li = document.createElement("li");
-                li.style.position = "absolute";
-                li.style.top = `${i * ITEM_HEIGHT}px`;
-                li.style.left = '0';
-                li.style.right = '0';
-                li.style.height = `${ITEM_HEIGHT - 8}px`; // minus margin
+  window.onkeydown = (e) => { if (e.key === '/') { e.preventDefault(); el('filter').focus(); } };
+  
+  function toggleCfg() { 
+    const v = el('overlay');
+    v.style.display = v.style.display === 'flex' ? 'none' : 'flex';
+    if (v.style.display === 'flex') el('token').value = localStorage.getItem('c6xc_auth') || '';
+  }
+  
+  function saveCfg() { 
+    localStorage.setItem('c6xc_auth', el('token').value.trim()); 
+    toggleCfg(); 
+    load(); 
+  }
 
-                const a = document.createElement("a");
-                a.href = game.url;
-                a.target = "_blank";
-                a.rel = "noopener noreferrer";
-                a.className = "game-link block px-4 py-2 rounded-lg text-sm";
-                a.innerHTML = `
-                    <span class="flex items-center gap-3">
-                        <span class="text-[var(--muted)] font-mono text-xs w-8 text-right opacity-50">${i + 1}</span>
-                        <svg class="w-4 h-4 text-[var(--muted)] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        <span class="truncate">${escapeHtml(game.name)}</span>
-                    </span>`;
-                
-                li.appendChild(a);
-                fragment.appendChild(li);
-            });
-
-            gamesList.appendChild(fragment);
-        }
-
-        // --- Data & API Logic ---
-
-        async function loadGames() {
-            if (isFetching) return;
-            isFetching = true;
-            
-            loadingState.classList.remove("hidden");
-            errorState.classList.add("hidden");
-            gamesList.innerHTML = "";
-            
-            const token = localStorage.getItem(STORAGE_KEY);
-            const headers = { "Accept": "application/vnd.github.v3+json" };
-            if (token) headers["Authorization"] = `token ${token}`;
-
-            try {
-                const response = await fetch("https://api.github.com/repos/HyperRushNet/c6xc/contents/", {
-                    headers: headers,
-                    cache: 'no-store'
-                });
-                
-                if (!response.ok) {
-                    if (response.status === 403) throw new Error("Rate limit exceeded. Add a token in settings.");
-                    if (response.status === 401) throw new Error("Invalid Token.");
-                    throw new Error(`HTTP ${response.status}`);
-                }
-
-                const limit = parseInt(response.headers.get("X-RateLimit-Limit")) || (token ? 5000 : 60);
-                const remaining = parseInt(response.headers.get("X-RateLimit-Remaining")) ?? limit;
-                updateRateLimitUI(limit, remaining);
-
-                const data = await response.json();
-                
-                allGames = data
-                    .filter(item => item.type === "file" && item.name.endsWith(".html") && item.name !== "index.html")
-                    .map(item => ({
-                        name: item.name.replace(".html", ""),
-                        url: `https://hyperrushnet.github.io/c6xc/${item.name}`
-                    }))
-                    .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
-
-                filteredGames = allGames;
-                gameCountHeader.textContent = allGames.length.toLocaleString();
-                
-                loadingState.classList.add("hidden");
-                isFetching = false;
-
-                // Initial render
-                updateVirtualList(); 
-
-            } catch (error) {
-                console.error(error);
-                isFetching = false;
-                loadingState.classList.add("hidden");
-                errorState.classList.remove("hidden");
-                errorMsg.textContent = error.message;
-            }
-        }
-
-        function updateRateLimitUI(limit, remaining) {
-            const percent = ((limit - remaining) / limit) * 100;
-            rateBarFill.style.width = `${percent}%`;
-            rateLimitText.textContent = `${remaining}/${limit}`;
-            rateBarFill.classList.toggle("critical", remaining < limit * 0.1);
-        }
-
-        // --- Interaction & Events ---
-
-        function filterGames(query) {
-            const term = query.toLowerCase().trim();
-            if (!term) {
-                filteredGames = allGames;
-            } else {
-                filteredGames = allGames.filter(g => g.name.toLowerCase().includes(term));
-            }
-            
-            // Reset scroll and re-render
-            viewport.scrollTop = 0;
-            visibleRange = { start: 0, end: 0 }; // Force reset
-            updateVirtualList();
-
-            emptyState.classList.toggle("hidden", filteredGames.length > 0);
-            gameCountHeader.textContent = `${filteredGames.length}/${allGames.length}`;
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement("div");
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // Scroll Listener (Passive for performance)
-        viewport.addEventListener("scroll", () => {
-            requestAnimationFrame(updateVirtualList);
-        }, { passive: true });
-
-        // Resize Listener
-        window.addEventListener("resize", updateVirtualList);
-
-        // Search Input
-        let debounceTimer;
-        searchInput.addEventListener("input", (e) => {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => filterGames(e.target.value), 200);
-        });
-
-        // Keyboard Shortcuts
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "/" && document.activeElement !== searchInput) {
-                e.preventDefault();
-                searchInput.focus();
-            }
-            if (e.key === "Escape") {
-                if (modal.classList.contains("active")) {
-                    closeModal();
-                } else if (document.activeElement === searchInput) {
-                    searchInput.value = "";
-                    filterGames("");
-                    searchInput.blur();
-                }
-            }
-        });
-
-        // Modal Logic
-        function openModal() {
-            modal.classList.add("active");
-            patInput.value = localStorage.getItem(STORAGE_KEY) || "";
-            patInput.focus();
-        }
-        function closeModal() {
-            modal.classList.remove("active");
-        }
-
-        openSettingsBtn.addEventListener("click", openModal);
-        closeModalBtn.addEventListener("click", closeModal);
-        modal.addEventListener("click", (e) => { if(e.target === modal) closeModal(); });
-
-        savePatBtn.addEventListener("click", () => {
-            const token = patInput.value.trim();
-            if(token) localStorage.setItem(STORAGE_KEY, token);
-            else localStorage.removeItem(STORAGE_KEY);
-            closeModal();
-            loadGames();
-        });
-
-        clearPatBtn.addEventListener("click", () => {
-            localStorage.removeItem(STORAGE_KEY);
-            patInput.value = "";
-            loadGames();
-        });
-
-        // Init
-        document.addEventListener("DOMContentLoaded", loadGames);
-
-    </script>
+  load();
+</script>
 </body>
 </html>
